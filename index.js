@@ -1,5 +1,5 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcode = require('qrcode'); // Change package
+const qrcode = require('qrcode-terminal');
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
@@ -29,9 +29,8 @@ const client = new Client({
 });
 
 client.on('qr', (qr) => {
-    // මේකෙන් Railway Logs වලට QR කෝඩ් එකට අදාළ ලින්ක් එකක් එනවා, ඒක බ්‍රව්සර් එකේ ඕපන් කරලා ස්කෑන් කරන්න පුළුවන්
-    console.log('QR RECEIVED, open this link in browser to scan if terminal fails:');
-    console.log('https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=' + encodeURIComponent(qr));
+    console.log('SCAN THIS QR CODE IN RAILWAY LOGS:');
+    qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
